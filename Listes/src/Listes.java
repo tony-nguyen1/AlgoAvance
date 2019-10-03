@@ -25,6 +25,22 @@ class Liste {
         }
     }
 
+    @Override
+    public String toString() {
+        if (this.estVide())
+            return "";
+        return String.valueOf(val) + ", " + suiv.toString();//+ suiv.toString();
+
+    }
+
+    public void setVal(int val) {
+        this.val = val;
+    }
+
+    public Liste getSuiv() {
+        return suiv;
+    }
+
     public void afficheListeInverse() {
         //action : idem mais dans l'autre sens
         if (!this.estVide())
@@ -83,5 +99,47 @@ class Liste {
             this.suiv = new Liste();
         } else
             this.suiv.ajoutFin(x);
+    }
+
+    public void concat(Liste l)
+    {
+        if (this.estVide())
+        {
+            this.val = l.val;
+            this.suiv = l.suiv;
+        }
+        else
+            this.suiv.concat(l);
+    }
+
+    public Liste copie() {
+        if (this.estVide())
+            return new Liste();
+        else
+        {
+            return new Liste(this.val, this.suiv.copie());
+        }
+    }
+
+    public int get(int i)
+    {
+        if (this.estVide())
+        { return 0; }
+        else if (i == 0)
+            return this.val;
+        else
+            return this.suiv.get(i-1);
+    }
+
+    public Liste ajoutFin2(int x)
+    {
+        if (this.estVide())
+        { return new Liste(x, new Liste()); }
+        else
+        {
+            Liste l = this.copie();
+            l.ajoutFin(x);
+            return l;
+        }
     }
 }
